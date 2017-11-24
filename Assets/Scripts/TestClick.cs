@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TestClick : MonoBehaviour {
 
-	public void clickTest()
+    public void testClick()
     {
         Debug.Log("Clicked");
     }

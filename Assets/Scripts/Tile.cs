@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour {
 
+    new Transform transform;
+
+    public Tile(Transform t)
+    {
+        transform = t;
+    }
+
     bool settled = false;
     Player owner;
     Piece[] occupants = new Piece[8]; // max number of 8 occupants per tile, 4 buildings 4 people
@@ -18,11 +25,11 @@ public class Tile : MonoBehaviour {
 
 
     // Needs to run at the end of each phase, not each frame
-    void isSettled()
+    public void isSettled()
     {
         for (int i = 0; i < 4; i++)
         {
-            if (occupants[i] != null) capturePoints++;
+            // if (occupants[i] != null) capturePoints++;
         }
         if (capturePoints >= neededCP) settled = true;
         else capturePoints = 0;
