@@ -7,10 +7,16 @@ public class Turn : MonoBehaviour
 {
 
     static Player player;
+    public static int phase = 0;
     static bool looping = true;
     public static bool tilePlaced = false;
 
-   
+    private void Start()
+    {
+        gameObject.AddComponent<TextManager>();
+    }
+    
+
     // receives a Player object from the GameManager script, and initializes a turn for that player.
     public void initializeTurn(Player p)
     {
@@ -23,20 +29,16 @@ public class Turn : MonoBehaviour
     // players draw a tile and place a tile on the board. this phase is skipped if the player has no more tiles to place
     IEnumerator drawPhase()
     {
-        Debug.Log("Entering Draw Phase");
-        
-
+        gameObject.GetComponent<TextManager>().changePhase("Draw Phase");
+        phase++;
         while (looping)
         {
-            Debug.Log(looping);
+
             yield return null;
         }
         
 
         yield return new WaitForSeconds(1f);
-
-        Debug.Log("Draw Phase Finished");
-
         StartCoroutine(populatingPhase());
 
     }
@@ -45,9 +47,8 @@ public class Turn : MonoBehaviour
     IEnumerator populatingPhase()
     {
         looping = true;
-
-        Debug.Log("Entering Population Phase");
-
+        gameObject.GetComponent<TextManager>().changePhase("Populating Phase");
+        phase++;
         while (looping)
         { 
             yield return null;
@@ -56,8 +57,6 @@ public class Turn : MonoBehaviour
 
         yield return new WaitForSeconds(1f);
 
-        Debug.Log("Populating Phase Finished");
-
         StartCoroutine(movementPhase());
     }
 
@@ -65,10 +64,9 @@ public class Turn : MonoBehaviour
     // within the movement phase
     IEnumerator movementPhase()
     {
-
+        phase++;
         looping = true;
-
-        Debug.Log("Entering Movement Phase");
+        gameObject.GetComponent<TextManager>().changePhase("Movement Phase");
 
         while (looping)
         {
@@ -78,8 +76,6 @@ public class Turn : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         resetTurn();
-        Debug.Log("Movement Phase Finished");
-        Debug.Log("Turn is now finished");
 
     }
     
@@ -113,6 +109,6 @@ public class Turn : MonoBehaviour
         GameManager.inTurn = false;
         looping = true;
         tilePlaced = false;
-        Debug.Log("Values Reset");
+        phase = 0;
     }
 }

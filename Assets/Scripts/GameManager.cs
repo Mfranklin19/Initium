@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         gameObject.AddComponent<Turn>();
-        
+        gameObject.AddComponent<TextManager>();
     }
 
     // Update is called once per frame
@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
     void player1Turn()
     {
         inTurn = true;
+        gameObject.GetComponent<TextManager>().changeText("Player 1's turn");
         gameObject.GetComponent<Turn>().initializeTurn(p1);
     }
 
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
     void player2Turn()
     {
         inTurn = true;
+        gameObject.GetComponent<TextManager>().changeText("Player 2's turn");
         gameObject.GetComponent<Turn>().initializeTurn(p2);
     }
 

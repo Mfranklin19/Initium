@@ -9,7 +9,7 @@ public class SelectTile : MonoBehaviour {
 
     public void OnMouseDown()
     {
-        if (!Turn.tilePlaced)
+        if (!Turn.tilePlaced && Turn.phase == 2)
         {
             Debug.Log("Selected tile # " + this.gameObject.name);
             target.SetActive(true);
@@ -17,7 +17,7 @@ public class SelectTile : MonoBehaviour {
             this.gameObject.SetActive(false);
             Turn.tilePlaced = true;
         }
-        else Debug.Log("You've already placed a tile this turn!");
+        else if (Turn.phase == 2) Debug.Log("You've already placed a tile this turn!");
     }
 
 
