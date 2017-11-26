@@ -5,8 +5,7 @@ using UnityEngine.UI;
 
 public class TextManager : MonoBehaviour
 {
-
-
+    
     public Text turnText;
     public Text phaseText;
     public Text placementWarning;

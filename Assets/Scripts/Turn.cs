@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class Turn : MonoBehaviour
 {
 
-    static Player player;
+    public static Player player;
     public static int phase = 0;
-    static bool looping = true;
     public static bool tilePlaced = false;
+
+    static bool looping = true;
 
     private void Start()
     {
@@ -29,16 +30,12 @@ public class Turn : MonoBehaviour
     // players draw a tile and place a tile on the board. this phase is skipped if the player has no more tiles to place
     IEnumerator drawPhase()
     {
-        gameObject.GetComponent<TextManager>().changePhase("Draw Phase");
+        gameObject.GetComponent<TextManager>().changePhase("Drawing a tile...");
         phase++;
-        while (looping)
-        {
 
-            yield return null;
-        }
-        
+        player.drawTile();
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(4f);
         StartCoroutine(populatingPhase());
 
     }

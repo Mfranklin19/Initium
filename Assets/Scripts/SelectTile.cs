@@ -16,6 +16,8 @@ public class SelectTile : MonoBehaviour {
             Debug.Log("Tile number: " + spaceNumber + " created");
             this.gameObject.SetActive(false);
             Turn.tilePlaced = true;
+            Turn.player.hand.RemoveAt(0);
+            Debug.Log("Player " + Turn.player.getNumber() + "'s hand Size: " + Turn.player.hand.Count);
         }
         else if (Turn.phase == 2) Debug.Log("You've already placed a tile this turn!");
     }

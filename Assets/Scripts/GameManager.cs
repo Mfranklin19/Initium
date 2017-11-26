@@ -8,14 +8,18 @@ public class GameManager : MonoBehaviour
     public static bool turnValue = true;
     public static bool inTurn = false;
 
-    Player p1 = new Player(1);
-    Player p2 = new Player(2);
+    Player p1;
+    Player p2;
 
     // Use this for initialization
     void Start()
     {
         gameObject.AddComponent<Turn>();
         gameObject.AddComponent<TextManager>();
+        p1 = new Player(1);
+        p2 = new Player(2);
+        p1.generateDeck();
+        p2.generateDeck();
     }
 
     // Update is called once per frame
