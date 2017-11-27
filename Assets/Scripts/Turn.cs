@@ -9,6 +9,9 @@ public class Turn : MonoBehaviour
     public static Player player;
     public static int phase = 0;
     public static bool tilePlaced = false;
+    public static int populatingValue = 0;
+    public static int turnNumber = 0;
+    public static int resources;
 
     static bool looping = true;
 
@@ -22,6 +25,9 @@ public class Turn : MonoBehaviour
     public void initializeTurn(Player p)
     {
         player = p;
+        if (player.getNumber() == 1) turnNumber++;
+        resources = turnNumber;
+        Debug.Log("Resources remaining: " + resources);
         StartCoroutine(drawPhase());
     }
 
@@ -43,6 +49,7 @@ public class Turn : MonoBehaviour
     // Phase where players populate their board, based on how many population points they have
     IEnumerator populatingPhase()
     {
+        gameObject.GetComponent<TextManager>().activatePopCanvas();
         looping = true;
         gameObject.GetComponent<TextManager>().changePhase("Populating Phase");
         phase++;
@@ -50,9 +57,11 @@ public class Turn : MonoBehaviour
         { 
             yield return null;
         }
-        
+
+        gameObject.GetComponent<TextManager>().deactivatePopCanvas();
 
         yield return new WaitForSeconds(1f);
+
 
         StartCoroutine(movementPhase());
     }
@@ -77,7 +86,8 @@ public class Turn : MonoBehaviour
     }
     
 
-    // called when players initiate combat by moving to a tile occupied by the opponent
+    // called when players initiate combat by moving to a tile occupied by the opponent. Does not happen automatically 
+    // every turn. Only called from inside the movementPhase() coroutine
     void combatPhase()
     {
 
@@ -98,11 +108,12 @@ public class Turn : MonoBehaviour
     }
 
 
-    // Resets the static values to prepare for the next player's turn
+    // Resets the static values to prepare for the next player's turn. Called at the end of the movement phase
     public void resetTurn()
     {
         if (player.getNumber() == 1) GameManager.turnValue = false;
         else GameManager.turnValue = true;
+        populatingValue = 0;
         GameManager.inTurn = false;
         looping = true;
         tilePlaced = false;
